@@ -14,9 +14,16 @@ RUN gcc -o unecm unecm.c
 
 FROM alpine
 
-WORKDIR /app
+WORKDIR /
 RUN apk add gcc
 COPY --from=build /app/build/Release/PS3Dec /usr/local/bin/PS3Dec
 COPY --from=build /app2/unecm /usr/local/bin/unecm
 
-ENTRYPOINT [ "PS3Dec" ]
+# ENTRYPOINT [ "PS3Dec" ]
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+
+CMD ["entrypoint.sh"]
+# CMD ["PS3Dec"]
